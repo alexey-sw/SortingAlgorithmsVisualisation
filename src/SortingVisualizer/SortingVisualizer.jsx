@@ -199,8 +199,14 @@ function readQuicksortAnimations(array, msdelay) {
       setTimeout(() => {
         barStyle.backgroundColor = animation[1];
       }, i * msdelay);
-    }else{//* format : [pivotIndex,replacedHeight] barIndex is index of the bar on which place we want to place our bar ( always pivot place)
-      
+    } else {
+      //* format : values of all bars in the array
+      setTimeout(() => {
+        for (let i = 0; i < animation.length; i++) {
+          const barStyle = arrayBars[i].style;
+          barStyle.height = animation[i];
+        }
+      }, i * msdelay);
     }
     i++;
   }
