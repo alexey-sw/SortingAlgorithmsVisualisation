@@ -261,10 +261,34 @@ function generateShellSortAnimations(array, animations) {
 
 export function getQuickSortAnimations(array) {
   let animations = [];
-  animations = generateQuickSortAnimations(array, animations);
+  array = generateQuickSortAnimations(array, animations);
+  
   return animations;
 }
-function generateQuickSortAnimations(array, animations) {
-  
-}
+function generateQuickSortAnimations(array, animations,stPoint) {
+  if (arr.length < 2) {
+    animations.push([stPoint,"purple"])//* if only one item left in the array then we just highlight pivot
+    return arr;
+  } // base case
 
+  const pivot = array[array.length - 1]; //pivot value
+  animations.push[stPoint,"purple"];
+  const left = []; // left handside array
+  const right = []; // right handside array
+
+  while (start < length) {
+    // comparing and pushing
+    if (array[start] < pivot) {
+      left.push(array[start]);
+    } else {
+      right.push(array[start]);
+    }
+    start++; //  incrementing start value
+  }
+  // calling quick sort recursively
+  return [
+    ...generateQuickSortAnimations(left),
+    pivot,
+    ...generateQuickSortAnimations(right),
+  ];
+}
