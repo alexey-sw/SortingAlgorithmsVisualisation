@@ -261,34 +261,56 @@ function generateShellSortAnimations(array, animations) {
 
 export function getQuickSortAnimations(array) {
   let animations = [];
-  array = generateQuickSortAnimations(array, animations);
-  
+  array = generateQuickSortAnimations(array, animations, 0, array);
+
   return animations;
 }
-function generateQuickSortAnimations(array, animations,stPoint) {
-  if (arr.length < 2) {
-    animations.push([stPoint,"purple"])//* if only one item left in the array then we just highlight pivot
-    return arr;
+//* we use auxiliary array to push new array in our animations list
+//*
+function generateQuickSortAnimations(
+  array,
+  animations,
+  stPoint,
+  auxiliaryArray,
+) {
+  if (array.length < 2) {
+    animations.push([stPoint, 'purple']); //* if only one item left in the array then we just highlight pivot
+    return array;
   } // base case
 
-  const pivot = array[array.length - 1]; //pivot value
-  animations.push[stPoint,"purple"];
+  const pivot = array[0]; //pivot value
+  animations.push([stPoint, 'purple']);
   const left = []; // left handside array
   const right = []; // right handside array
+  let start = 1;
+  const length = array.length;
 
   while (start < length) {
     // comparing and pushing
     if (array[start] < pivot) {
+      animations.push([stPoint + start, 'red']);
       left.push(array[start]);
     } else {
+      animations.push([stPoint + start, 'green']);
       right.push(array[start]);
     }
     start++; //  incrementing start value
   }
+  let primaryArray = [].concat(left, [pivot], right);
+  auxiliaryArray = mergeArrays(primaryArray, auxiliaryArray);
+  animations.push(auxiliaryArray);
   // calling quick sort recursively
   return [
-    ...generateQuickSortAnimations(left),
+    ...generateQuickSortAnimations(left, animations, 0, auxiliaryArray),
     pivot,
-    ...generateQuickSortAnimations(right),
+    ...generateQuickSortAnimations(right,animations,left.length+1,auxiliaryArray),
   ];
+}
+function mergeArrays(primaryArray, auxiliaryArray) {
+  for (let f = 0; f < primaryArray.length; f++) {
+    if (primaryArray[f] !== auxiliaryArray[f]) {
+      auxiliaryArray[f] = primaryArray[f];
+    }
+  }
+  return auxiliaryArray;
 }

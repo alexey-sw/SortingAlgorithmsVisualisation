@@ -14,7 +14,7 @@ import './SortingVisualizer.css';
 // Change this value for the speed of the animations.
 const ANIMATION_SPEED_MS = 2;
 // Change this value for the number of bars (value) in the array.
-const NUMBER_OF_ARRAY_BARS = 300;
+const NUMBER_OF_ARRAY_BARS = 10;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = 'turquoise';
@@ -97,7 +97,8 @@ export default class SortingVisualizer extends React.Component {
     );
   }
   quickSort() {
-    readQuicksortAnimations(this.state.array, ANIMATION_SPEED_MS);
+    readQuicksortAnimations(this.state.array, 1000);
+    console.log(this.state.array);
   }
   // NOTE: This method will only work if your sorting algorithms actually return
   // the sorted arrays; if they return the animations (as they currently do), then
@@ -189,8 +190,9 @@ function animationRoutine(funct, array, msdelay) {
 //* finding bar smaller or bigger than pivot (changing color to green or red) [barindex,green|red]
 //* changing the position of all bars which are greater than pivot
 function readQuicksortAnimations(array, msdelay) {
+  // let animations = getQuickSortAnimations(array);
   let animations = getQuickSortAnimations(array);
-  const i = 0;
+  let i = 0;
   for (let animation of animations) {
     const arrayBars = document.getElementsByClassName('array-bar');
     if (animation.length === 2) {
@@ -198,13 +200,16 @@ function readQuicksortAnimations(array, msdelay) {
       const barStyle = arrayBars[animation[0]].style;
       setTimeout(() => {
         barStyle.backgroundColor = animation[1];
+        setTimeout(()=>{
+          barStyle.backgroundColor = PRIMARY_COLOR;
+        },i*msdelay)
       }, i * msdelay);
     } else {
       //* format : values of all bars in the array
       setTimeout(() => {
-        for (let i = 0; i < animation.length; i++) {
-          const barStyle = arrayBars[i].style;
-          barStyle.height = animation[i];
+        for (let k = 0; k < animation.length;k++) {
+          const barStyle = arrayBars[k].style;
+          barStyle.height = `${animation[k]}px`;
         }
       }, i * msdelay);
     }
