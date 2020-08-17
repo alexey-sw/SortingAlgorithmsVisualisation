@@ -274,7 +274,10 @@ function generateQuickSortAnimations(
   auxiliaryArray,
 ) {
   if (array.length < 2) {
-    animations.push([stPoint, 'purple']); //* if only one item left in the array then we just highlight pivot
+    //* if only one item left in the array then we just highlight pivot
+    animations.push([stPoint, 'purple']);
+    animations.push([stPoint,'turquoise'])
+
     return array;
   } // base case
 
@@ -289,28 +292,38 @@ function generateQuickSortAnimations(
     // comparing and pushing
     if (array[start] < pivot) {
       animations.push([stPoint + start, 'red']);
+      animations.push([stPoint + start, 'turquoise']);
       left.push(array[start]);
     } else {
       animations.push([stPoint + start, 'green']);
+      animations.push([stPoint + start, 'turquoise']);
+
       right.push(array[start]);
     }
     start++; //  incrementing start value
   }
+  animations.push([stPoint,'turquoise'])
   let primaryArray = [].concat(left, [pivot], right);
-  auxiliaryArray = mergeArrays(primaryArray, auxiliaryArray);
+  auxiliaryArray = mergeArrays(primaryArray, auxiliaryArray,stPoint);
   animations.push(auxiliaryArray);
+  console.log(auxiliaryArray,"auxilliaryArray");
   // calling quick sort recursively
   return [
-    ...generateQuickSortAnimations(left, animations, 0, auxiliaryArray),
+    ...generateQuickSortAnimations(left, animations, stPoint, auxiliaryArray),
     pivot,
-    ...generateQuickSortAnimations(right,animations,left.length+1,auxiliaryArray),
+    ...generateQuickSortAnimations(right,animations,left.length+stPoint+1,auxiliaryArray),
   ];
 }
-function mergeArrays(primaryArray, auxiliaryArray) {
-  for (let f = 0; f < primaryArray.length; f++) {
-    if (primaryArray[f] !== auxiliaryArray[f]) {
-      auxiliaryArray[f] = primaryArray[f];
+//* mergePoint is index of the start of primaryArray;
+
+function mergeArrays(primaryArray, auxiliaryArray,mergePoint) {
+  let f = mergePoint;
+  for (let st=0;st<primaryArray.length;st++) {
+    
+    if (primaryArray[st] !== auxiliaryArray[f]) {
+      auxiliaryArray[f] = primaryArray[st];
     }
+    f++;
   }
   return auxiliaryArray;
 }

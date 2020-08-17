@@ -97,8 +97,8 @@ export default class SortingVisualizer extends React.Component {
     );
   }
   quickSort() {
-    readQuicksortAnimations(this.state.array, 1000);
-    console.log(this.state.array);
+    readQuicksortAnimations(this.state.array, 100);
+    // console.log(this.state.array);
   }
   // NOTE: This method will only work if your sorting algorithms actually return
   // the sorted arrays; if they return the animations (as they currently do), then
@@ -192,22 +192,22 @@ function animationRoutine(funct, array, msdelay) {
 function readQuicksortAnimations(array, msdelay) {
   // let animations = getQuickSortAnimations(array);
   let animations = getQuickSortAnimations(array);
+  console.log(animations);
   let i = 0;
   for (let animation of animations) {
     const arrayBars = document.getElementsByClassName('array-bar');
     if (animation.length === 2) {
       //* it is color change
+      console.log(arrayBars[animation[0]],i);
       const barStyle = arrayBars[animation[0]].style;
       setTimeout(() => {
         barStyle.backgroundColor = animation[1];
-        setTimeout(()=>{
-          barStyle.backgroundColor = PRIMARY_COLOR;
-        },i*msdelay)
       }, i * msdelay);
+      
     } else {
       //* format : values of all bars in the array
       setTimeout(() => {
-        for (let k = 0; k < animation.length;k++) {
+        for (let k = 0; k < animation.length; k++) {
           const barStyle = arrayBars[k].style;
           barStyle.height = `${animation[k]}px`;
         }
