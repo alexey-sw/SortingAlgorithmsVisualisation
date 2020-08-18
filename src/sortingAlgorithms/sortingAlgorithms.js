@@ -258,10 +258,9 @@ function generateShellSortAnimations(array, animations) {
   }
   return animations;
 }
-
 export function getQuickSortAnimations(array) {
   let animations = [];
-  array = generateQuickSortAnimations(array, animations, 0, array);
+  generateQuickSortAnimations(array, animations, 0, array);
 
   return animations;
 }
@@ -272,7 +271,11 @@ function generateQuickSortAnimations(
   animations,
   stPoint,
   auxiliaryArray,
-) {
+)
+ {
+  if (stPoint===10){
+    stPoint-=1;
+  }
   if (array.length < 2) {
     //* if only one item left in the array then we just highlight pivot
     animations.push([stPoint, 'purple']);
@@ -304,9 +307,8 @@ function generateQuickSortAnimations(
   }
   animations.push([stPoint,'turquoise'])
   let primaryArray = [].concat(left, [pivot], right);
-  auxiliaryArray = mergeArrays(primaryArray, auxiliaryArray,stPoint);
-  animations.push(auxiliaryArray);
-  console.log(auxiliaryArray,"auxilliaryArray");
+  auxiliaryArray = mergeArrays(primaryArray,auxiliaryArray,stPoint);
+  animations.push(auxiliaryArray.slice());
   // calling quick sort recursively
   return [
     ...generateQuickSortAnimations(left, animations, stPoint, auxiliaryArray),
@@ -325,5 +327,7 @@ function mergeArrays(primaryArray, auxiliaryArray,mergePoint) {
     }
     f++;
   }
+  
+  // animations.push(auxiliaryArray);
   return auxiliaryArray;
 }
