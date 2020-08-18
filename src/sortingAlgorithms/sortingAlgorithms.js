@@ -96,14 +96,14 @@ function generateBubbleSortAnimations(array, animations,accessCounter) {
         accessCounter+=2;
         animations.push([j + 1, tmp]);
         animations.push([j, j + 1]);
-        animations.push([j, j + 1]);
-        animations.push([j, array[j + 1],accessCounter]);//* accessCounter correct here
+        animations.push([j, j + 1,accessCounter]);
+        animations.push([j, array[j + 1]]);//* accessCounter correct here
         array[j] = array[j + 1];
         array[j + 1] = tmp;
         accessCounter+=2;
       } else {
         accessCounter+=2;
-        animations.push([j, array[j],accessCounter]); //* nothing changes in that case because we are pushing the same value
+        animations.push([j, array[j]]); //* nothing changes in that case because we are pushing the same value
       }
     }
   }

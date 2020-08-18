@@ -14,7 +14,7 @@ import './SortingVisualizer.css';
 // Change this value for the speed of the animations.
 const ANIMATION_SPEED_MS = 2;
 // Change this value for the number of bars (value) in the array.
-const NUMBER_OF_ARRAY_BARS = 10;
+const NUMBER_OF_ARRAY_BARS = 20;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = 'turquoise';
@@ -106,10 +106,6 @@ export default class SortingVisualizer extends React.Component {
   animationRoutine(funct, array, msdelay,accessCounter) {
     const animations = funct(array,accessCounter);
     for (let i = 0; i < animations.length; i++) {
-      if (animations[i].length===3){
-        console.log(animations[i][2])
-        this.setState({accessCounter:animations[i][2]})
-      }
       const arrayBars = document.getElementsByClassName('array-bar');
       const isColorChange = i % 3 !== 2; // every 3rd array is not a color change
       if (isColorChange) {
@@ -120,12 +116,17 @@ export default class SortingVisualizer extends React.Component {
         const barTwoStyle = arrayBars[barTwoIdx].style;
         const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
         setTimeout(() => {
+          if (animations[i].length===3){
+            this.setState({accessCounter:animations[i][2]})
+          }
           barOneStyle.backgroundColor = color;
           barTwoStyle.backgroundColor = color;
         }, i * msdelay);
       } else {
         setTimeout(() => {
-          const [barOneIdx, newHeight] = animations[i]; //changing height of an element
+          const [barOneIdx, newHeight] = animations[i];
+      
+           //changing height of an element
           const barOneStyle = arrayBars[barOneIdx].style;
           barOneStyle.height = `${newHeight}px`;
         }, i * msdelay);
