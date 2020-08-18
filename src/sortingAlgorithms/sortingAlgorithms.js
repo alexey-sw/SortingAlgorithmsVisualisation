@@ -271,15 +271,14 @@ function generateQuickSortAnimations(
   animations,
   stPoint,
   auxiliaryArray,
-)
- {
-  if (stPoint===10){
-    stPoint-=1;
+) {
+  if (stPoint === 10) {
+    stPoint -= 1;
   }
   if (array.length < 2) {
     //* if only one item left in the array then we just highlight pivot
     animations.push([stPoint, 'purple']);
-    animations.push([stPoint,'turquoise'])
+    animations.push([stPoint, 'turquoise']);
 
     return array;
   } // base case
@@ -295,39 +294,41 @@ function generateQuickSortAnimations(
     // comparing and pushing
     if (array[start] < pivot) {
       animations.push([stPoint + start, 'red']);
-      animations.push([stPoint + start, 'turquoise']);
       left.push(array[start]);
     } else {
       animations.push([stPoint + start, 'green']);
-      animations.push([stPoint + start, 'turquoise']);
-
       right.push(array[start]);
     }
     start++; //  incrementing start value
   }
-  animations.push([stPoint,'turquoise'])
   let primaryArray = [].concat(left, [pivot], right);
-  auxiliaryArray = mergeArrays(primaryArray,auxiliaryArray,stPoint);
+  auxiliaryArray = mergeArrays(primaryArray, auxiliaryArray, stPoint);
   animations.push(auxiliaryArray.slice());
-  // calling quick sort recursively
+  let resetArrayColor = []
+  for (let i = 0;i<primaryArray.length;i++){
+    resetArrayColor.push([stPoint+i,"turquoise"]);
+  }
+  animations.push(resetArrayColor.slice())
+  //* now we have to remove animation (red and green bars)
   return [
     ...generateQuickSortAnimations(left, animations, stPoint, auxiliaryArray),
     pivot,
-    ...generateQuickSortAnimations(right,animations,left.length+stPoint+1,auxiliaryArray),
+    ...generateQuickSortAnimations(
+      right,
+      animations,
+      left.length + stPoint + 1,
+      auxiliaryArray,
+    ),
   ];
 }
 //* mergePoint is index of the start of primaryArray;
-
-function mergeArrays(primaryArray, auxiliaryArray,mergePoint) {
+function mergeArrays(primaryArray, auxiliaryArray, mergePoint) {
   let f = mergePoint;
-  for (let st=0;st<primaryArray.length;st++) {
-    
+  for (let st = 0; st < primaryArray.length; st++) {
     if (primaryArray[st] !== auxiliaryArray[f]) {
       auxiliaryArray[f] = primaryArray[st];
     }
     f++;
   }
-  
-  // animations.push(auxiliaryArray);
   return auxiliaryArray;
 }

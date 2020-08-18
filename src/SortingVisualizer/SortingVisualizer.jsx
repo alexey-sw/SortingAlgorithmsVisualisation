@@ -113,6 +113,7 @@ export default class SortingVisualizer extends React.Component {
               height: `${value}px`,
             }}></div>
         ))}
+        <button onClick={() => this.resetArray()}>Generate new array</button>
         <button onClick={() => this.mergeSort()}>Merge Sort</button>
         <button onClick={() => this.selectionSort()}>Selection Sort</button>
         <button onClick={() => this.heapSort()}>Heap Sort</button>
@@ -126,20 +127,9 @@ export default class SortingVisualizer extends React.Component {
   }
 }
 
-
 function randomIntFromInterval(min, max) {
   // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-function arraysAreEqual(arrayOne, arrayTwo) {
-  if (arrayOne.length !== arrayTwo.length) return false;
-  for (let i = 0; i < arrayOne.length; i++) {
-    if (arrayOne[i] !== arrayTwo[i]) {
-      return false;
-    }
-  }
-  return true;
 }
 
 function animationRoutine(funct, array, msdelay) {
@@ -175,21 +165,29 @@ function readQuicksortAnimations(array, msdelay) {
   let i = 0;
   for (let animation of animations) {
     const arrayBars = document.getElementsByClassName('array-bar');
-    if (animation.length === 2) {
-      //* it is color change
+    if (animation.length === 2 && animation[0].length!==2) {
       const barStyle = arrayBars[animation[0]].style;
       setTimeout(() => {
         barStyle.backgroundColor = animation[1];
       }, i * msdelay);
-      
     } else {
       //* format : values of all bars in the array
-      setTimeout(() => {
-        for (let k = 0; k < animation.length; k++) {
-          const barStyle = arrayBars[k].style;
-          barStyle.height = `${animation[k]}px`;
-        }
-      }, i * msdelay);
+      if (animation[0].length ===2){
+        setTimeout(()=>{
+          for (let m=0;m<animation.length;m++){
+            const barStyle = arrayBars[animation[m][0]].style;
+            barStyle.backgroundColor ="turquoise";
+          }
+        },i*msdelay);
+      }else{
+        setTimeout(() => {
+          for (let k = 0; k < animation.length; k++) {
+            const barStyle = arrayBars[k].style;
+            barStyle.height = `${animation[k]}px`;
+          }
+        }, i * msdelay);
+      }
+      
     }
     i++;
   }
