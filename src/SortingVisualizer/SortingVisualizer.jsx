@@ -97,24 +97,22 @@ export default class SortingVisualizer extends React.Component {
     );
   }
   quickSort() {
-    readQuicksortAnimations(this.state.array, 100);
-    // console.log(this.state.array);
+    readQuicksortAnimations(this.state.array, 500);
   }
   // NOTE: This method will only work if your sorting algorithms actually return
   // the sorted arrays; if they return the animations (as they currently do), then
   // this method will be broken.
-  testSortingAlgorithms() {
-    for (let i = 0; i < 100; i++) {
-      const array = [];
-      const length = randomIntFromInterval(1, 1000);
-      for (let i = 0; i < length; i++) {
-        array.push(randomIntFromInterval(-1000, 1000));
-      }
-      const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-      const mergeSortedArray = getMergeSortAnimations(array.slice());
-      console.log(arraysAreEqual(javaScriptSortedArray, mergeSortedArray));
-    }
-  }
+  // testSortingAlgorithms() {
+  //   for (let i = 0; i < 100; i++) {
+  //     const array = [];
+  //     const length = randomIntFromInterval(1, 1000);
+  //     for (let i = 0; i < length; i++) {
+  //       array.push(randomIntFromInterval(-1000, 1000));
+  //     }
+  //     const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
+  //     const mergeSortedArray = getMergeSortAnimations(array.slice());
+  //   }
+  // }
 
   render() {
     const {array} = this.state;
@@ -162,7 +160,6 @@ function arraysAreEqual(arrayOne, arrayTwo) {
 
 function animationRoutine(funct, array, msdelay) {
   const animations = funct(array);
-  console.log(animations);
   for (let i = 0; i < animations.length; i++) {
     const arrayBars = document.getElementsByClassName('array-bar');
     const isColorChange = i % 3 !== 2; // every 3rd array is not a color change
@@ -190,15 +187,12 @@ function animationRoutine(funct, array, msdelay) {
 //* finding bar smaller or bigger than pivot (changing color to green or red) [barindex,green|red]
 //* changing the position of all bars which are greater than pivot
 function readQuicksortAnimations(array, msdelay) {
-  // let animations = getQuickSortAnimations(array);
   let animations = getQuickSortAnimations(array);
-  
   let i = 0;
   for (let animation of animations) {
     const arrayBars = document.getElementsByClassName('array-bar');
     if (animation.length === 2) {
       //* it is color change
-      console.log(arrayBars[animation[0]],i);
       const barStyle = arrayBars[animation[0]].style;
       setTimeout(() => {
         barStyle.backgroundColor = animation[1];
