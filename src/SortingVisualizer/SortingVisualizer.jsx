@@ -14,7 +14,7 @@ import './SortingVisualizer.css';
 // Change this value for the speed of the animations.
 const ANIMATION_SPEED_MS = 2;
 // Change this value for the number of bars (value) in the array.
-const NUMBER_OF_ARRAY_BARS = 10;
+const NUMBER_OF_ARRAY_BARS = 300;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = 'turquoise';
@@ -97,7 +97,7 @@ export default class SortingVisualizer extends React.Component {
     );
   }
   quickSort() {
-    readQuicksortAnimations(this.state.array, 500);
+    readQuicksortAnimations(this.state.array, ANIMATION_SPEED_MS);
   }
   render() {
     const {array} = this.state;
@@ -176,7 +176,7 @@ function readQuicksortAnimations(array, msdelay) {
         setTimeout(()=>{
           for (let m=0;m<animation.length;m++){
             const barStyle = arrayBars[animation[m][0]].style;
-            barStyle.backgroundColor ="turquoise";
+            barStyle.backgroundColor =animation[m][1];
           }
         },i*msdelay);
       }else{

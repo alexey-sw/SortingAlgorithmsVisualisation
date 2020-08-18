@@ -272,7 +272,7 @@ function generateQuickSortAnimations(
   stPoint,
   auxiliaryArray,
 ) {
-  if (stPoint === 10) {
+  if (stPoint === 300) {
     stPoint -= 1;
   }
   if (array.length < 2) {
@@ -301,14 +301,27 @@ function generateQuickSortAnimations(
     }
     start++; //  incrementing start value
   }
+  //* setting all the colors -> 
   let primaryArray = [].concat(left, [pivot], right);
   auxiliaryArray = mergeArrays(primaryArray, auxiliaryArray, stPoint);
-  animations.push(auxiliaryArray.slice());
-  let resetArrayColor = []
-  for (let i = 0;i<primaryArray.length;i++){
-    resetArrayColor.push([stPoint+i,"turquoise"]);
+  let colorOfArrayBeforeReset = [];
+  let resetArrayColor = [];
+  for (let k = 0; k < primaryArray.length; k++) {
+    if (k < left.length) {
+      colorOfArrayBeforeReset.push([stPoint+k,'red']);
+    } else if (k === left.length) {
+      colorOfArrayBeforeReset.push([stPoint+k,'purple']);
+    } else {
+      colorOfArrayBeforeReset.push([stPoint+k,'green']);
+    }
   }
-  animations.push(resetArrayColor.slice())
+  for (let i = 0; i < primaryArray.length; i++) {
+    resetArrayColor.push([stPoint + i, 'turquoise']);
+  }
+  animations.push(resetArrayColor.slice());
+  animations.push(auxiliaryArray.slice());
+  animations.push(colorOfArrayBeforeReset.slice());
+  animations.push(resetArrayColor.slice());
   //* now we have to remove animation (red and green bars)
   return [
     ...generateQuickSortAnimations(left, animations, stPoint, auxiliaryArray),
