@@ -99,21 +99,6 @@ export default class SortingVisualizer extends React.Component {
   quickSort() {
     readQuicksortAnimations(this.state.array, 500);
   }
-  // NOTE: This method will only work if your sorting algorithms actually return
-  // the sorted arrays; if they return the animations (as they currently do), then
-  // this method will be broken.
-  // testSortingAlgorithms() {
-  //   for (let i = 0; i < 100; i++) {
-  //     const array = [];
-  //     const length = randomIntFromInterval(1, 1000);
-  //     for (let i = 0; i < length; i++) {
-  //       array.push(randomIntFromInterval(-1000, 1000));
-  //     }
-  //     const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-  //     const mergeSortedArray = getMergeSortAnimations(array.slice());
-  //   }
-  // }
-
   render() {
     const {array} = this.state;
 
@@ -128,7 +113,6 @@ export default class SortingVisualizer extends React.Component {
               height: `${value}px`,
             }}></div>
         ))}
-        <button onClick={() => this.resetArray()}>Generate New Array</button>
         <button onClick={() => this.mergeSort()}>Merge Sort</button>
         <button onClick={() => this.selectionSort()}>Selection Sort</button>
         <button onClick={() => this.heapSort()}>Heap Sort</button>
