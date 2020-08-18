@@ -78,12 +78,12 @@ function doMerge(
   }
 }
 
-export function getBubbleSortAnimations(array) {
+export function getBubbleSortAnimations(array,accessCounter) {
   let animations = [];
-  animations = generateBubbleSortAnimations(array, animations);
+  animations = generateBubbleSortAnimations(array, animations,accessCounter);
   return animations;
 }
-function generateBubbleSortAnimations(array, animations) {
+function generateBubbleSortAnimations(array, animations,accessCounter) {
   let len = array.length;
   for (let i = 0; i < len; i++) {
     for (let j = 0; j < len - 1 - i; j++) {
@@ -93,15 +93,17 @@ function generateBubbleSortAnimations(array, animations) {
       animations.push([i, j + 1]);
       if (array[j] > array[j + 1]) {
         let tmp = array[j];
-        //algorithm for changing div heights
+        accessCounter+=2;
         animations.push([j + 1, tmp]);
         animations.push([j, j + 1]);
         animations.push([j, j + 1]);
-        animations.push([j, array[j + 1]]);
+        animations.push([j, array[j + 1],accessCounter]);//* accessCounter correct here
         array[j] = array[j + 1];
         array[j + 1] = tmp;
+        accessCounter+=2;
       } else {
-        animations.push([j, array[j]]); //* nothing changes in that case because we are pushing the same value
+        accessCounter+=2;
+        animations.push([j, array[j],accessCounter]); //* nothing changes in that case because we are pushing the same value
       }
     }
   }
