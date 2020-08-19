@@ -14,7 +14,9 @@ import './SortingVisualizer.css';
 // Change this value for the speed of the animations.
 const ANIMATION_SPEED_MS = 2;
 // Change this value for the number of bars (value) in the array.
-const NUMBER_OF_ARRAY_BARS = 100;
+// const NUMBER_OF_ARRAY_BARS = 300;
+// const NUMBER_OF_ARRAY_BARS = 20;
+const NUMBER_OF_ARRAY_BARS = 50;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = 'turquoise';
@@ -86,6 +88,7 @@ export default class SortingVisualizer extends React.Component {
       ANIMATION_SPEED_MS,
       accessCounter,
     );
+    this.state.array.sort((a,b)=>a-b);
   }
   insertionSort() {
     this.animationRoutine(
