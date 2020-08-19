@@ -16,7 +16,7 @@ const ANIMATION_SPEED_MS = 2;
 // Change this value for the number of bars (value) in the array.
 // const NUMBER_OF_ARRAY_BARS = 300;
 // const NUMBER_OF_ARRAY_BARS = 20;
-const NUMBER_OF_ARRAY_BARS = 50;
+const NUMBER_OF_ARRAY_BARS = 150;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = 'turquoise';
@@ -88,7 +88,7 @@ export default class SortingVisualizer extends React.Component {
       ANIMATION_SPEED_MS,
       accessCounter,
     );
-    this.state.array.sort((a,b)=>a-b);
+    
   }
   insertionSort() {
     this.animationRoutine(
@@ -136,6 +136,7 @@ export default class SortingVisualizer extends React.Component {
         }, i * msdelay);
       }
     }
+    setTimeout(()=>{this.state.array.sort((a,b)=>a-b)},animations.length*msdelay);
   }
   render() {
     const {array} = this.state;
@@ -214,6 +215,7 @@ class AccessCounter extends React.Component{
   render(){
     return (
       <div className = "accessCounter">
+        Array accesses:
         {this.props.value}
       </div>
     )
