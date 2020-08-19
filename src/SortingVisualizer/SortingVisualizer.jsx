@@ -14,7 +14,7 @@ import './SortingVisualizer.css';
 // Change this value for the speed of the animations.
 const ANIMATION_SPEED_MS = 2;
 // Change this value for the number of bars (value) in the array.
-const NUMBER_OF_ARRAY_BARS = 20;
+const NUMBER_OF_ARRAY_BARS = 100;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = 'turquoise';
@@ -78,10 +78,11 @@ export default class SortingVisualizer extends React.Component {
   //accessCounter
   bubbleSort() {
     let accessCounter = this.state.accessCounter;
+    //* state is sorted somehow
     // We leave it as an exercise to the viewer of this code to implement this method.
     this.animationRoutine(
       getBubbleSortAnimations,
-      this.state.array,
+      this.state.array.slice(),
       ANIMATION_SPEED_MS,
       accessCounter,
     );
@@ -104,19 +105,19 @@ export default class SortingVisualizer extends React.Component {
     readQuicksortAnimations(this.state.array, ANIMATION_SPEED_MS);
   }
   animationRoutine(funct, array, msdelay,accessCounter) {
+    //* state is already sorted somehow 
     const animations = funct(array,accessCounter);
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-bar');
       const isColorChange = i % 3 !== 2; // every 3rd array is not a color change
       if (isColorChange) {
         const [barOneIdx, barTwoIdx] = animations[i];
-        // console.log(arrayBars[barOneIdx]);
-        // console.log(arrayBars[barTwoIdx]);
         const barOneStyle = arrayBars[barOneIdx].style;
         const barTwoStyle = arrayBars[barTwoIdx].style;
         const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
         setTimeout(() => {
-          if (animations[i].length===3){
+          if (animations[i].length===3 && animations[i][2]>10){
+            // console.log(this.state.array);
             this.setState({accessCounter:animations[i][2]})
           }
           barOneStyle.backgroundColor = color;

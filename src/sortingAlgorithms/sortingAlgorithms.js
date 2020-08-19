@@ -84,6 +84,7 @@ export function getBubbleSortAnimations(array,accessCounter) {
   return animations;
 }
 function generateBubbleSortAnimations(array, animations,accessCounter) {
+  let initialArray = array.slice();
   let len = array.length;
   for (let i = 0; i < len; i++) {
     for (let j = 0; j < len - 1 - i; j++) {
@@ -107,6 +108,11 @@ function generateBubbleSortAnimations(array, animations,accessCounter) {
       }
     }
   }
+  // console.log(array);
+  // console.log(initialArray)
+  array = initialArray
+  //*  console.log(array); it works
+  // console.log(array);
   return animations;
 }
 //* bubble sort algorithm itself;
