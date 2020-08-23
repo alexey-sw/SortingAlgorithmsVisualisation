@@ -30,7 +30,7 @@ export default class SortingVisualizer extends React.Component {
 
     this.state = {
       array: [],
-      accessCounter:0
+      comparisonCounter: 0,
     };
   }
 
@@ -43,7 +43,7 @@ export default class SortingVisualizer extends React.Component {
     for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
       array.push(randomIntFromInterval(5, 730));
     }
-    this.setState({array,accessCounter:0});
+    this.setState({array, comparisonCounter: 0});
   }
 
   mergeSort() {
@@ -51,65 +51,77 @@ export default class SortingVisualizer extends React.Component {
     //* the idea is that we have list of animations some array indicates color change , another indicates height change
     this.animationRoutine(
       getMergeSortAnimations,
-      this.state.array,
+      this.state.array.slice(),
       ANIMATION_SPEED_MS,
     );
   }
 
   selectionSort() {
+    let comparisonCounter = this.state.comparisonCounter;
+
     this.animationRoutine(
       getSelectionSortAnimations,
-      this.state.array,
+      this.state.array.slice(),
       ANIMATION_SPEED_MS,
+      comparisonCounter
     );
   }
   gnomeSort() {
+    let comparisonCounter = this.state.comparisonCounter;
     this.animationRoutine(
       getGnomeSortAnimations,
-      this.state.array,
+      this.state.array.slice(),
       ANIMATION_SPEED_MS,
+      comparisonCounter
     );
   }
   heapSort() {
+    let comparisonCounter = this.state.comparisonCounter
     this.animationRoutine(
       getHeapSortAnimations,
-      this.state.array,
+      this.state.array.slice(),
       ANIMATION_SPEED_MS,
+      comparisonCounter
     );
   }
-  //accessCounter
+  //comparisonCounter
   bubbleSort() {
-    let accessCounter = this.state.accessCounter;
+    let comparisonCounter = this.state.comparisonCounter;
+
     //* state is sorted somehow
     // We leave it as an exercise to the viewer of this code to implement this method.
     this.animationRoutine(
       getBubbleSortAnimations,
       this.state.array.slice(),
       ANIMATION_SPEED_MS,
-      accessCounter,
+      comparisonCounter,
     );
-    
   }
   insertionSort() {
+    let comparisonCounter = this.state.comparisonCounter;
     this.animationRoutine(
       getInsertionSortAnimations,
-      this.state.array,
+      this.state.array.slice(),
       ANIMATION_SPEED_MS,
+      comparisonCounter
     );
   }
   shellSort() {
+    let comparisonCounter = this.state.comparisonCounter;
     this.animationRoutine(
       getShellSortAnimations,
-      this.state.array,
+      this.state.array.slice(),
       ANIMATION_SPEED_MS,
+      comparisonCounter
     );
   }
   quickSort() {
-    readQuicksortAnimations(this.state.array, ANIMATION_SPEED_MS);
+    readQuicksortAnimations(this.state.array.slice(), ANIMATION_SPEED_MS);
   }
-  animationRoutine(funct, array, msdelay,accessCounter) {
-    //* state is already sorted somehow 
-    const animations = funct(array,accessCounter);
+  animationRoutine(funct, array, msdelay, comparisonCounter) {
+    //* state is already sorted somehow
+    const animations = funct(array, comparisonCounter);
+    console.log(animations);
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-bar');
       const isColorChange = i % 3 !== 2; // every 3rd array is not a color change
@@ -119,9 +131,9 @@ export default class SortingVisualizer extends React.Component {
         const barTwoStyle = arrayBars[barTwoIdx].style;
         const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
         setTimeout(() => {
-          if (animations[i].length===3 && animations[i][2]>10){
+          if (animations[i].length === 3 && animations[i][2] > 10) {
             // console.log(this.state.array);
-            this.setState({accessCounter:animations[i][2]})
+            this.setState({comparisonCounter: animations[i][2]});
           }
           barOneStyle.backgroundColor = color;
           barTwoStyle.backgroundColor = color;
@@ -129,14 +141,16 @@ export default class SortingVisualizer extends React.Component {
       } else {
         setTimeout(() => {
           const [barOneIdx, newHeight] = animations[i];
-      
-           //changing height of an element
+
+          //changing height of an element
           const barOneStyle = arrayBars[barOneIdx].style;
           barOneStyle.height = `${newHeight}px`;
         }, i * msdelay);
       }
     }
-    setTimeout(()=>{this.state.array.sort((a,b)=>a-b)},animations.length*msdelay);
+    setTimeout(() => {
+      this.state.array.sort((a, b) => a - b);
+    }, animations.length * msdelay);
   }
   render() {
     const {array} = this.state;
@@ -161,7 +175,8 @@ export default class SortingVisualizer extends React.Component {
         <button onClick={() => this.gnomeSort()}>Gnome Sort</button>
         <button onClick={() => this.shellSort()}>Shell Sort</button>;
         <button onClick={() => this.quickSort()}>Quick Sort</button>
-        <AccessCounter value={this.state.accessCounter}></AccessCounter>
+        <Comparisoncounter
+          value={this.state.comparisonCounter}></Comparisoncounter>
       </div>
     );
   }
@@ -171,7 +186,6 @@ function randomIntFromInterval(min, max) {
   // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
-
 
 //* 3 types of animation : setting pivot(changing color of the bar to purple) [barindex,purple]
 //* finding bar smaller or bigger than pivot (changing color to green or red) [barindex,green|red]
@@ -206,18 +220,21 @@ function readQuicksortAnimations(array, msdelay) {
     }
     i++;
   }
+  setTimeout(() => {
+    this.state.array.sort((a, b) => a - b);
+  }, animations.length * msdelay);
 }
 
-class AccessCounter extends React.Component{
+class Comparisoncounter extends React.Component {
   constructor(props) {
     super(props);
   }
-  render(){
+  render() {
     return (
-      <div className = "accessCounter">
-        Array accesses:
+      <div className="comparisonCounter">
+        Comparisons:
         {this.props.value}
       </div>
-    )
+    );
   }
 }
