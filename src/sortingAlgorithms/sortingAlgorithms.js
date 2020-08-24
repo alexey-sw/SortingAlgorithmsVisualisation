@@ -1,3 +1,4 @@
+import {NUMBER_OF_ARRAY_BARS } from "../SortingVisualizer/SortingVisualizer.jsx"
 export function getMergeSortAnimations(array) {
   const animations = [];
   if (array.length <= 1) return array; //* if everything is sorted
@@ -292,7 +293,7 @@ function generateQuickSortAnimations(
   stPoint,
   auxiliaryArray,
 ) {
-  if (stPoint === 150) {
+  if (stPoint === NUMBER_OF_ARRAY_BARS) {
     stPoint -= 1;
   }
   if (array.length < 2) {

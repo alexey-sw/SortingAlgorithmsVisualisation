@@ -16,7 +16,7 @@ const ANIMATION_SPEED_MS = 2;
 // Change this value for the number of bars (value) in the array.
 // const NUMBER_OF_ARRAY_BARS = 300;
 // const NUMBER_OF_ARRAY_BARS = 20;
-const NUMBER_OF_ARRAY_BARS = 150;
+export const NUMBER_OF_ARRAY_BARS = 150;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = 'turquoise';
