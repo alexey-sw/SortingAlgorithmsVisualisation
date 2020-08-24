@@ -291,7 +291,7 @@ function generateQuickSortAnimations(
   stPoint,
   auxiliaryArray,
 ) {
-  if (stPoint === 300) {
+  if (stPoint === 150) {
     stPoint -= 1;
   }
   if (array.length < 2) {

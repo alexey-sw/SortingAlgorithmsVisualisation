@@ -116,8 +116,43 @@ export default class SortingVisualizer extends React.Component {
     );
   }
   quickSort() {
-    readQuicksortAnimations(this.state.array.slice(), ANIMATION_SPEED_MS);
+    this.readQuicksortAnimations(this.state.array.slice(), ANIMATION_SPEED_MS);
   }
+  readQuicksortAnimations(array, msdelay) {
+    let animations = getQuickSortAnimations(array);
+    let i = 0;
+    for (let animation of animations) {
+      const arrayBars = document.getElementsByClassName('array-bar');
+      if (animation.length === 2 && animation[0].length !== 2) {
+        const barStyle = arrayBars[animation[0]].style;
+        setTimeout(() => {
+          barStyle.backgroundColor = animation[1];
+        }, i * msdelay);
+      } else {
+        //* format : values of all bars in the array
+        if (animation[0].length === 2) {
+          setTimeout(() => {
+            for (let m = 0; m < animation.length; m++) {
+              const barStyle = arrayBars[animation[m][0]].style;
+              barStyle.backgroundColor = animation[m][1];
+            }
+          }, i * msdelay);
+        } else {
+          setTimeout(() => {
+            for (let k = 0; k < animation.length; k++) {
+              const barStyle = arrayBars[k].style;
+              barStyle.height = `${animation[k]}px`;
+            }
+          }, i * msdelay);
+        }
+      }
+      i++;
+    }
+    setTimeout(() => {
+      this.state.array.sort((a, b) => a - b);
+    }, animations.length * msdelay);
+  }
+  
   animationRoutine(funct, array, msdelay, comparisonCounter) {
     //* state is already sorted somehow
     const animations = funct(array, comparisonCounter);
@@ -190,40 +225,6 @@ function randomIntFromInterval(min, max) {
 //* 3 types of animation : setting pivot(changing color of the bar to purple) [barindex,purple]
 //* finding bar smaller or bigger than pivot (changing color to green or red) [barindex,green|red]
 //* changing the position of all bars which are greater than pivot
-function readQuicksortAnimations(array, msdelay) {
-  let animations = getQuickSortAnimations(array);
-  let i = 0;
-  for (let animation of animations) {
-    const arrayBars = document.getElementsByClassName('array-bar');
-    if (animation.length === 2 && animation[0].length !== 2) {
-      const barStyle = arrayBars[animation[0]].style;
-      setTimeout(() => {
-        barStyle.backgroundColor = animation[1];
-      }, i * msdelay);
-    } else {
-      //* format : values of all bars in the array
-      if (animation[0].length === 2) {
-        setTimeout(() => {
-          for (let m = 0; m < animation.length; m++) {
-            const barStyle = arrayBars[animation[m][0]].style;
-            barStyle.backgroundColor = animation[m][1];
-          }
-        }, i * msdelay);
-      } else {
-        setTimeout(() => {
-          for (let k = 0; k < animation.length; k++) {
-            const barStyle = arrayBars[k].style;
-            barStyle.height = `${animation[k]}px`;
-          }
-        }, i * msdelay);
-      }
-    }
-    i++;
-  }
-  setTimeout(() => {
-    this.state.array.sort((a, b) => a - b);
-  }, animations.length * msdelay);
-}
 
 class Comparisoncounter extends React.Component {
   constructor(props) {
