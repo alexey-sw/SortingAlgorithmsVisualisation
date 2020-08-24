@@ -196,8 +196,7 @@ function generateGnomeSortAnimations(array, animations,comparisonCounter) {
       i--; //going back
     } else {
       i++; //going forward
-      console.log("here");
-      animations.push([i-1,i-1,comparisonCounter],[i-1,i-1],[i-1,array[i]]);
+      animations.push([i-1,i-1,comparisonCounter],[i-1,i-1],[i-1,array[i-1]]);
     }
   }
   return animations;

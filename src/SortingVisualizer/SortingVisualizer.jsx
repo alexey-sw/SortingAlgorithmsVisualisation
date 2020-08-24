@@ -161,7 +161,6 @@ export default class SortingVisualizer extends React.Component {
       const isColorChange = i % 3 !== 2; // every 3rd array is not a color change
       if (isColorChange) {
         const [barOneIdx, barTwoIdx] = animations[i];
-        console.log(animations[i]);
         const barOneStyle = arrayBars[barOneIdx].style;
         const barTwoStyle = arrayBars[barTwoIdx].style;
         const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
