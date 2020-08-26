@@ -8,15 +8,16 @@ import {
   getHeapSortAnimations,
   getShellSortAnimations,
   getQuickSortAnimations,
+  getShakerSortAnimations,
 } from '../sortingAlgorithms/sortingAlgorithms.js';
 import './SortingVisualizer.css';
 
 // Change this value for the speed of the animations.
-const ANIMATION_SPEED_MS = 2;
+const ANIMATION_SPEED_MS = 100;
 // Change this value for the number of bars (value) in the array.
 // const NUMBER_OF_ARRAY_BARS = 300;
 // const NUMBER_OF_ARRAY_BARS = 20;
-export const NUMBER_OF_ARRAY_BARS = 150;
+export const NUMBER_OF_ARRAY_BARS =10;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = 'turquoise';
@@ -63,7 +64,7 @@ export default class SortingVisualizer extends React.Component {
       getSelectionSortAnimations,
       this.state.array.slice(),
       ANIMATION_SPEED_MS,
-      comparisonCounter
+      comparisonCounter,
     );
   }
   gnomeSort() {
@@ -72,16 +73,16 @@ export default class SortingVisualizer extends React.Component {
       getGnomeSortAnimations,
       this.state.array.slice(),
       ANIMATION_SPEED_MS,
-      comparisonCounter
+      comparisonCounter,
     );
   }
   heapSort() {
-    let comparisonCounter = this.state.comparisonCounter
+    let comparisonCounter = this.state.comparisonCounter;
     this.animationRoutine(
       getHeapSortAnimations,
       this.state.array.slice(),
       ANIMATION_SPEED_MS,
-      comparisonCounter
+      comparisonCounter,
     );
   }
   //comparisonCounter
@@ -97,13 +98,21 @@ export default class SortingVisualizer extends React.Component {
       comparisonCounter,
     );
   }
+  shakerSort() {
+    this.animationRoutine(
+      getShakerSortAnimations,
+      this.state.array.slice(),
+      ANIMATION_SPEED_MS,
+      
+    );
+  }
   insertionSort() {
     let comparisonCounter = this.state.comparisonCounter;
     this.animationRoutine(
       getInsertionSortAnimations,
       this.state.array.slice(),
       ANIMATION_SPEED_MS,
-      comparisonCounter
+      comparisonCounter,
     );
   }
   shellSort() {
@@ -112,7 +121,7 @@ export default class SortingVisualizer extends React.Component {
       getShellSortAnimations,
       this.state.array.slice(),
       ANIMATION_SPEED_MS,
-      comparisonCounter
+      comparisonCounter,
     );
   }
   quickSort() {
@@ -152,7 +161,7 @@ export default class SortingVisualizer extends React.Component {
       this.state.array.sort((a, b) => a - b);
     }, animations.length * msdelay);
   }
-  
+
   animationRoutine(funct, array, msdelay, comparisonCounter) {
     //* state is already sorted somehow
     const animations = funct(array, comparisonCounter);
@@ -160,6 +169,7 @@ export default class SortingVisualizer extends React.Component {
       const arrayBars = document.getElementsByClassName('array-bar');
       const isColorChange = i % 3 !== 2; // every 3rd array is not a color change
       if (isColorChange) {
+        console.log(animations[i]);
         const [barOneIdx, barTwoIdx] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
         const barTwoStyle = arrayBars[barTwoIdx].style;
@@ -209,6 +219,7 @@ export default class SortingVisualizer extends React.Component {
         <button onClick={() => this.gnomeSort()}>Gnome Sort</button>
         <button onClick={() => this.shellSort()}>Shell Sort</button>;
         <button onClick={() => this.quickSort()}>Quick Sort</button>
+        <button onClick={() => this.shakerSort()}>Shaker Sort</button>
         <Comparisoncounter
           value={this.state.comparisonCounter}></Comparisoncounter>
       </div>

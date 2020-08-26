@@ -1,4 +1,4 @@
-import {NUMBER_OF_ARRAY_BARS } from "../SortingVisualizer/SortingVisualizer.jsx"
+import {NUMBER_OF_ARRAY_BARS} from '../SortingVisualizer/SortingVisualizer.jsx';
 export function getMergeSortAnimations(array) {
   const animations = [];
   if (array.length <= 1) return array; //* if everything is sorted
@@ -120,22 +120,26 @@ function generateBubbleSortAnimations(array, animations, comparisonCounter) {
 }
 //* bubble sort algorithm itself;
 
-export function getSelectionSortAnimations(array,comparisonCounter) {
+export function getSelectionSortAnimations(array, comparisonCounter) {
   let animations = [];
-  animations = generateSelectionSortAnimations(array, animations,comparisonCounter);
+  animations = generateSelectionSortAnimations(
+    array,
+    animations,
+    comparisonCounter,
+  );
   return animations;
 }
-function generateSelectionSortAnimations(array, animations,comparisonCounter) {
+function generateSelectionSortAnimations(array, animations, comparisonCounter) {
   let len = array.length;
   for (let i = 0; i < len; i++) {
     for (let j = i; j < len; j++) {
       animations.push([i, j]);
       animations.push([i, j]);
       if (array[i] > array[j]) {
-        comparisonCounter+=1;
+        comparisonCounter += 1;
         animations.push([i, array[j]]);
         animations.push([i, j]);
-        animations.push([i, j,comparisonCounter]);
+        animations.push([i, j, comparisonCounter]);
         animations.push([j, array[i]]);
         array[i] = [array[j], (array[j] = array[i])][0];
       } else {
@@ -146,12 +150,16 @@ function generateSelectionSortAnimations(array, animations,comparisonCounter) {
   return animations;
 }
 
-export function getInsertionSortAnimations(array,comparisonCounter) {
+export function getInsertionSortAnimations(array, comparisonCounter) {
   let animations = [];
-  animations = generateInsertionSortAnimations(array, animations,comparisonCounter);
+  animations = generateInsertionSortAnimations(
+    array,
+    animations,
+    comparisonCounter,
+  );
   return animations;
 }
-function generateInsertionSortAnimations(array, animations,comparisonCounter) {
+function generateInsertionSortAnimations(array, animations, comparisonCounter) {
   let len = array.length;
   for (let i = 1; i < len; i++) {
     let j = i - 1;
@@ -162,7 +170,7 @@ function generateInsertionSortAnimations(array, animations,comparisonCounter) {
       animations.push([j, j + 1], [j, j + 1]);
       array[j + 1] = array[j];
       animations.push([j + 1, array[j]]);
-      animations.push([j, j + 1,comparisonCounter], [j, j + 1]);
+      animations.push([j, j + 1, comparisonCounter], [j, j + 1]);
       animations.push([j, array[j + 1]]);
       j = j - 1;
     }
@@ -174,21 +182,25 @@ function generateInsertionSortAnimations(array, animations,comparisonCounter) {
   return animations;
 }
 
-export function getGnomeSortAnimations(array,comparisonCounter) {
+export function getGnomeSortAnimations(array, comparisonCounter) {
   let animations = [];
-  animations = generateGnomeSortAnimations(array, animations,comparisonCounter);
+  animations = generateGnomeSortAnimations(
+    array,
+    animations,
+    comparisonCounter,
+  );
   return animations;
 }
 
-function generateGnomeSortAnimations(array, animations,comparisonCounter) {
+function generateGnomeSortAnimations(array, animations, comparisonCounter) {
   const len = array.length;
   let i = 1;
   while (i < len) {
     //* while i< length
     if (i > 0 && array[i - 1] > array[i]) {
-      comparisonCounter+=1;
+      comparisonCounter += 1;
       //* if previous value is better than current:
-      animations.push([i, i - 1,comparisonCounter], [i, i - 1]);
+      animations.push([i, i - 1, comparisonCounter], [i, i - 1]);
       animations.push([i, array[i - 1]]);
       animations.push([i, i - 1], [i, i - 1]);
       animations.push([i - 1, array[i]]);
@@ -197,19 +209,23 @@ function generateGnomeSortAnimations(array, animations,comparisonCounter) {
       i--; //going back
     } else {
       i++; //going forward
-      animations.push([i-1,i-1,comparisonCounter],[i-1,i-1],[i-1,array[i-1]]);
+      animations.push(
+        [i - 1, i - 1, comparisonCounter],
+        [i - 1, i - 1],
+        [i - 1, array[i - 1]],
+      );
     }
   }
   return animations;
 }
-export function getHeapSortAnimations(array,comparisonCounter) {
+export function getHeapSortAnimations(array, comparisonCounter) {
   let animations = [];
-  animations = generateHeapSortAnimations(array, animations,comparisonCounter);
+  animations = generateHeapSortAnimations(array, animations, comparisonCounter);
   return animations;
 }
-function generateHeapSortAnimations(array, animations,comparisonCounter) {
+function generateHeapSortAnimations(array, animations, comparisonCounter) {
   function swap(array, index_A, index_B) {
-    animations.push([index_A, index_B,comparisonCounter], [index_A, index_B]);
+    animations.push([index_A, index_B, comparisonCounter], [index_A, index_B]);
     animations.push([index_A, array[index_B]]);
     animations.push([index_A, index_B], [index_A, index_B]);
     animations.push([index_B, array[index_A]]);
@@ -226,12 +242,10 @@ function generateHeapSortAnimations(array, animations,comparisonCounter) {
     if (left < array_length && array[left] > array[max]) {
       max = left;
       comparisonCounter++;
-
     }
     if (right < array_length && array[right] > array[max]) {
       max = right;
       comparisonCounter++;
-
     }
 
     if (max !== i) {
@@ -253,13 +267,17 @@ function generateHeapSortAnimations(array, animations,comparisonCounter) {
   return animations;
 }
 
-export function getShellSortAnimations(array,comparisonCounter) {
+export function getShellSortAnimations(array, comparisonCounter) {
   let animations = [];
-  animations = generateShellSortAnimations(array, animations,comparisonCounter);
+  animations = generateShellSortAnimations(
+    array,
+    animations,
+    comparisonCounter,
+  );
   return animations;
 }
 
-function generateShellSortAnimations(array, animations,comparisonCounter) {
+function generateShellSortAnimations(array, animations, comparisonCounter) {
   var len = array.length;
   var h = 1;
   while (h < len / 3) {
@@ -269,9 +287,14 @@ function generateShellSortAnimations(array, animations,comparisonCounter) {
     for (var i = h; i < len; i++) {
       for (var j = i; j > 0 && array[j] < array[j - h]; j -= h) {
         comparisonCounter++;
-        animations.push([j, j - h,comparisonCounter], [j, j - h], [j, array[j - h]]);
+        animations.push(
+          [j, j - h, comparisonCounter],
+          [j, j - h],
+          [j, array[j - h]],
+        );
         animations.push([j, j - h], [j, j - h], [j - h, array[j]]);
         array[j] = [array[j - h], (array[j - h] = array[j])][0];
+        console.log(array);
       }
     }
     //decreasing h
@@ -365,4 +388,43 @@ function mergeArrays(primaryArray, auxiliaryArray, mergePoint) {
     f++;
   }
   return auxiliaryArray;
+}
+
+export function getShakerSortAnimations(array) {
+  let animations = [];
+  animations = generateShakerSortAnimations(array, animations);
+  return animations;
+}
+
+function generateShakerSortAnimations(arr, animations) {
+  var swapped;
+  do {
+    for (var i = 0; i < arr.length - 2; i++) {
+      if (arr[i] > arr[i + 1]) {
+        animations.push([i, i + 1], [i, i + 1], [i, arr[i + 1]]);
+        animations.push([i, i + 1], [i, i + 1], [i + 1, arr[i]]);
+        var temp = arr[i];
+        arr[i] = arr[i + 1];
+        arr[i + 1] = temp;
+        
+        swapped = true;
+      }
+    }
+    if (!swapped) {
+      break;
+    }
+    swapped = false;
+    for (i = arr.length - 2; i > 0; i--) {
+      if (arr[i] > arr[i + 1]) {
+        animations.push([i, i + 1], [i, i + 1], [i, arr[i + 1]]);
+        animations.push([i, i + 1], [i, i + 1], [i + 1, arr[i]]);
+        var temp1 = arr[i];
+        arr[i] = arr[i + 1];
+        arr[i + 1] = temp1;
+        
+        swapped = true;
+      }
+    }
+  } while (swapped);
+  return animations;
 }
